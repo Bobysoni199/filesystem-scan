@@ -22,11 +22,11 @@ stages:
   - job: Scan
     steps:
     - script: |
-        sudo apt-get update
-        sudo apt-get install -y wget
-        wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.48.4_Linux-64bit.deb
-        sudo dpkg -i trivy_0.48.4_Linux-64bit.deb
-      displayName: Install Trivy
+        sudo apt-get install wget apt-transport-https gnupg lsb-release -y
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+        echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+        sudo apt-get update -y
+        sudo apt-get install trivy -y
 
     - script: |
         sudo trivy image --severity HIGH,CRITICAL --exit-code 1 nginx:alpine
