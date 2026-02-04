@@ -40,5 +40,5 @@ stages:
   - job: Deploy
     steps:
     - script: |
-        sudo docker run -d -p 80:80 nginx:alpine
+        sudo docker run -d -p 80:80 nginx:alpine --name nginx
       displayName: Run NGINX Container
