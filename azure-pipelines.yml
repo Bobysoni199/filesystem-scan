@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  vmImage: agent
+  name: agent
 
 stages:
 - stage: Pull_Image
