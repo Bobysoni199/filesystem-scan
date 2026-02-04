@@ -11,7 +11,7 @@ stages:
   - job: Pull
     steps:
     - script: |
-        docker pull nginx:alpine
+        sudo docker pull nginx:alpine
       displayName: Pull NGINX Image
 
 - stage: Image_Scan
@@ -29,7 +29,7 @@ stages:
       displayName: Install Trivy
 
     - script: |
-        trivy image --severity HIGH,CRITICAL --exit-code 1 nginx:alpine
+        sudo trivy image --severity HIGH,CRITICAL --exit-code 1 nginx:alpine
       displayName: Scan NGINX Image
 
 - stage: Deploy
@@ -40,5 +40,5 @@ stages:
   - job: Deploy
     steps:
     - script: |
-        docker run -d -p 80:80 nginx:alpine
+        sudo docker run -d -p 80:80 nginx:alpine
       displayName: Run NGINX Container
